@@ -1,0 +1,136 @@
+info:
+  title: My Project
+  description: ''
+  version: 1.0.0
+tags: []
+paths:
+  /tickets/{ticketId}:
+    get:
+      summary: get ticket
+      deprecated: false
+      description: 'get ticket from id'
+      tags: [ticket]
+      parameters:
+        - name: ticketId
+          in: path
+          description: 'ticket id'
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: 'ticket'
+          headers: {}
+          schema:
+            $ref: '#/definitions/TicketResponse'
+      security: []
+      produces:
+        - application/json
+    patch:
+      summary: update ticket status
+      deprecated: false
+      description: 'update ticket status'
+      tags: [ticket]
+      parameters:
+        - name: ticketId
+          in: path
+          description: 'ticket id'
+          required: true
+          type: integer
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/UpdateTicketStatusRequest'
+      responses:
+        '200':
+          description: 'updated ticket'
+          headers: {}
+          schema:
+            $ref: '#/definitions/TicketResponse'
+      security: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  /tickets:
+    post:
+      summary: create ticket
+      deprecated: false
+      description: 'create a new ticket'
+      tags: [ticket]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/CreateTicketRequest'
+      responses:
+        '200':
+          description: 'created ticket'
+          headers: {}
+          schema:
+            $ref: '#/definitions/TicketResponse'
+      security: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
+security: []
+swagger: '2.0'
+definitions:
+  TicketResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+      createdOn:
+        type: date
+      modifiedOn:
+        type: date
+      source:
+        type: string
+        enum: [CALL_CENTER, BRANCH]
+      status:
+        type: string
+        enum: [IN_PROGRESS, COMPLETED, CANCELED]
+      description:
+        type: string
+      customerName:
+        type: string
+      customerEmail:
+        type: string
+      customerPhoneNo:
+        type: string
+      staffId:
+        type: integer
+      microserviceId:
+        type: integer
+  
+  CreateTicketRequest:
+    type: object
+    properties:
+      source:
+        type: string
+        enum: [CALL_CENTER, BRANCH]
+      status:
+        type: string
+        enum: [IN_PROGRESS, COMPLETED, CANCELED]
+      description:
+        type: string
+      customerName:
+        type: string
+      customerEmail:
+        type: string
+      customerPhoneNo:
+        type: string
+      staffId:
+        type: integer
+      microserviceId:
+        type: integer
+  
+  UpdateTicketStatusRequest:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [IN_PROGRESS, COMPLETED, CANCELED]
+securityDefinitions: {}
+x-components: {}
